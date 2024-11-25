@@ -1,0 +1,11 @@
+@import './color.scss';
+@import './global.scss';
+@import './transition.scss';
+@import './variable.scss';
+
+body {
+    margin: 0;
+}
+#app {
+    background: #f6f6f6;
+}
