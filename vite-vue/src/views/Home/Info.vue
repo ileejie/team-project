@@ -6,16 +6,16 @@
 !-->
 <template>
   <div id="mainbox" class='page-wrap'>
-    <el-form ref="form" :model="queryForm" size="small">
+    <el-form ref="form" :model="queryForm">
       <el-row :gutter="20">
         <el-col :span="4">
           <el-form-item label="任务名称">
-            <el-input v-model="queryForm.taskName"></el-input>
+            <el-input v-model="queryForm.params.taskName"></el-input>
           </el-form-item>
         </el-col>
         <el-col :span="4">
           <el-form-item label="任务状态">
-            <el-select v-model="queryForm.taskState" placeholder="请选择">
+            <el-select v-model="queryForm.params.taskState" placeholder="请选择">
               <el-option
                 v-for="item in taskStateOptions"
                 :key="item.value"
@@ -38,7 +38,7 @@
             </el-date-picker>
           </el-form-item>
         </el-col>
-        <el-col :span="4">
+        <el-col :span="5">
           <el-form-item>
             <el-button type="primary" @click="queryData">查询</el-button>
             <el-button @click="resetQuery">重置</el-button>
@@ -48,9 +48,9 @@
         </el-col>
       </el-row>
     </el-form>
-    <el-table ref="taskTable" :data="tableData" stripe size="small" height="calc(100% - 105px)" max-height="calc(100% - 105px)" style="width: 100%" @selection-change="selectionLineChangeHandle">
+    <el-table ref="taskTable" :data="tableData.list" stripe height="calc(100% - 105px)" max-height="calc(100% - 105px)" style="width: 100%" @selection-change="selectionLineChangeHandle">
       <el-table-column type="selection" width="55"></el-table-column>
-      <el-table-column type="index" label="序号" width="50" align="center"></el-table-column>
+      <el-table-column type="index" label="序号" width="80" align="center"></el-table-column>
       <el-table-column prop="taskName" label="任务名称" align="center"></el-table-column>
       <el-table-column prop="taskState" label="任务状态" align="center">
         <template v-slot="scope">
@@ -64,7 +64,7 @@
       <el-table-column
         align="center"
         label="操作"
-        width="160">
+        width="180">
         <template v-slot="scope">
           <el-button
             @click.prevent="runRecord(scope.row.id)"
@@ -85,9 +85,9 @@
       <el-pagination
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
-        :current-page="queryForm.page"
+        :current-page="queryForm.params.page"
         :page-sizes="[10, 20, 50, 100]"
-        :page-size="queryForm.pageSize"
+        :page-size="queryForm.params.pageSize"
         layout="total, sizes, prev, pager, next, jumper"
         :total="total">
       </el-pagination>
@@ -135,68 +135,70 @@ const taskStateOptions = [
 let taskTable = ref();
 let dateRange = reactive([]);
 let queryForm = reactive({
-  taskName: '',
-  taskState: '',
-  page: 1,
-  pageSize: 20
-});
-let tableData = reactive([]);
-let total = ref(0);
-let tableChecked = reactive([]);
-tableData = totalTable.slice(0, 20);
-total.value = totalTable.length;
-// 数据查询方法
-const queryData = () => {
-  tableData = [];
-  totalTable.forEach(item => {
-    if (queryForm.taskState) {
-      if (item.taskName.includes(queryForm.taskName) && item.taskState === queryForm.taskState) {
-        tableData.push(item)
-      }
-    } else {
-      if (item.taskName.includes(queryForm.taskName)) {
-        tableData.push(item)
-      }
-    }
-  });
-  total.value = tableData.length;
-};
-// 重置查询方法
-const resetQuery = () => {
-  queryForm = {
+  params: {
     taskName: '',
     taskState: '',
     page: 1,
     pageSize: 20
   }
-  queryForm.page = 1;
-  tableData = totalTable.slice(0, 20);
+});
+let tableData = reactive({ list: [] });
+let total = ref(0);
+let tableChecked = reactive({ list: [] });
+tableData.list = totalTable.slice(0, 20);
+total.value = totalTable.length;
+// 数据查询方法
+const queryData = () => {
+  tableData.list = [];
+  totalTable.forEach(item => {
+    if (queryForm.params.taskState) {
+      if (item.taskName.includes(queryForm.params.taskName) && item.taskState === queryForm.params.taskState) {
+        tableData.list.push(item)
+      }
+    } else {
+      if (item.taskName.includes(queryForm.params.taskName)) {
+        tableData.list.push(item)
+      }
+    }
+  });
+  total.value = tableData.list.length;
+};
+// 重置查询方法
+const resetQuery = () => {
+  queryForm.params = {
+    taskName: '',
+    taskState: '',
+    page: 1,
+    pageSize: 20
+  }
+  tableData.list = totalTable.slice(0, 20);
+  total.value = totalTable.length;
 };
 const handleSizeChange = (size) => {
-  queryForm.pageSize = size;
-  queryForm.page = 1;
-  tableData = totalTable.slice(0, size);
+  queryForm.params.pageSize = size;
+  queryForm.params.page = 1;
+  tableData.list = totalTable.slice(0, size);
 };
 const handleCurrentChange = (page) => {
-  queryForm.page = page;
-  tableData = totalTable.slice((page - 1) * queryForm.pageSize, page * queryForm.pageSize);
+  queryForm.params.page = page;
+  tableData.list = totalTable.slice((page - 1) * queryForm.params.pageSize, page * queryForm.params.pageSize);
 };
 // 选择行数据
 const selectionLineChangeHandle = (val) => {
   console.log(val);
-  tableChecked = val;
+  tableChecked.list = val;
 };
 // 运行任务、暂停任务
 const operateTask = (type) => {
-  if (!tableChecked.length) {
+  if (!tableChecked.list.length) {
     ElMessage({
       message: '请选择要操作的数据',
       type: "warning"
     });
     return;
   }
-  tableChecked.forEach(item => {
-    tableData.forEach(obj => {
+  tableChecked.list.forEach(item => {
+    tableData.list.forEach(obj => {
       if (item.id === obj.id) {
         obj.taskState = type === 'run' ? '1' : '2';
       }

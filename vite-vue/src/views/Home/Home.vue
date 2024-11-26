@@ -1,7 +1,7 @@
 <template>
-  <div class="content-container pagiation-container">
+  <div class="content-container pagination-container">
     <div class="charts-view">
-      <div class="echart-wrap">
+      <div class="echarts-wrap">
         <div class="wrap-head">
           <span>任务统计</span>
           <el-select v-model="taskType" size="small" placeholder="请选择" @change="handleTask">
@@ -13,11 +13,11 @@
             </el-option>
           </el-select>
         </div>
-        <div class="echart-card">
+        <div class="echarts-card">
           <echart-card :data="taskOptions"></echart-card>
         </div>
       </div>
-      <div class="echart-wrap">
+      <div class="echarts-wrap">
         <div class="wrap-head">
           <span>费用统计</span>
           <el-select v-model="feeType" size="small" placeholder="请选择" @change="handleFee">
@@ -29,11 +29,11 @@
             </el-option>
           </el-select>
         </div>
-        <div class="echart-card">
+        <div class="echarts-card">
           <echart-card :data="feeOptions"></echart-card>
         </div>
       </div>
-      <div class="echart-wrap">
+      <div class="echarts-wrap">
         <div class="wrap-head">
           <span>报告统计</span>
           <el-select v-model="reportType" size="small" placeholder="请选择" @change="handleReport">
@@ -45,7 +45,7 @@
             </el-option>
           </el-select>
         </div>
-        <div class="echart-card">
+        <div class="echarts-card">
           <echart-card :data="reportOptions"></echart-card>
         </div>
       </div>
@@ -268,7 +268,7 @@ export default {
   .charts-view {
     display: flex;
     justify-content: space-between;
-    .echart-wrap {
+    .echarts-wrap {
       width: 32.5%;
       height: 300px;
       background: #fff;
@@ -286,7 +286,7 @@ export default {
           font-weight: bold;
         }
       }
-      .echart-card {
+      .echarts-card {
         width: 100%;
         height: calc(100% - 38px);
       }
