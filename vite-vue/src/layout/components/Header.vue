@@ -1,7 +1,7 @@
 <template>
     <div class="header">
         <img class="web-logo" src="@/assets/images/heaerImg.png" alt="web logo" />
-        <p class="web-name">测试自建网站</p>
+        <p class="web-name">测试网站</p>
         <!-- <el-breadcrumb separator-icon="ArrowRight" style="flex: 1;">
         <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
         <el-breadcrumb-item>promotion management</el-breadcrumb-item>
@@ -40,32 +40,27 @@
     </div>
 </template>
 
-<script>
+<script setup>
 import { ref, reactive, watch, computed } from 'vue'
 import { useStore } from 'vuex'
 import { useRouter } from 'vue-router'
-export default {
-    setup() {
-        const store = useStore()
-        const router = useRouter()
-        const username = computed(() => store.state.username)
-        const personInfo = () => {
-            router.push({ path: '/person/userCenter' })
-        }
-        const changePass = () => {
-            router.push({ path: '/person/password' })
-        }
-        const logout = () => {
-            router.replace({ path: '/login' })
-        }
-        const servicePage = () => {
-            router.push({ path: '/service' })
-        }
-        const messagePage = () => {
-            router.push({ path: '/message' })
-        }
-        return { username, personInfo, changePass, logout, servicePage, messagePage }
-    }
+const store = useStore()
+const router = useRouter()
+const username = computed(() => store.state.username)
+const personInfo = () => {
+  router.push({ path: '/person/userCenter' })
+}
+const changePass = () => {
+  router.push({ path: '/person/password' })
+}
+const logout = () => {
+  router.replace({ path: '/login' })
+}
+const servicePage = () => {
+  router.push({ path: '/service' })
+}
+const messagePage = () => {
+  router.push({ path: '/message' })
 }
 </script>
 

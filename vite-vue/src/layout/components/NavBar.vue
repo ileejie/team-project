@@ -48,21 +48,16 @@
     </el-row>
 </template>
 
-<script>
+<script setup>
 import { ref, watch } from 'vue'
 import { useRouter } from 'vue-router'
-export default {
-    setup() {
-        const router = useRouter()
-        let activeRoute = ref(router.currentRoute.value.fullPath)
-        watch(() => router.currentRoute.value.fullPath, (val, old) => {
-            activeRoute.value = val
-        })
-        return { activeRoute }
-    }
-}
+const router = useRouter()
+let activeRoute = ref(router.currentRoute.value.fullPath)
+watch(() => router.currentRoute.value.fullPath, (val, old) => {
+  activeRoute.value = val
+})
 </script>
- 
+
 <style lang="scss" scoped>
 .tac {
     position: fixed;

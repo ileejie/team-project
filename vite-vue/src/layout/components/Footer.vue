@@ -1,6 +1,6 @@
 <template>
     <div class="footer-wrap">
-        &copy;测试自建网站·鲁ICP备18245212号-1
+        &copy;测试网站·鲁ICP备18245212号-1
     </div>
 </template>
 

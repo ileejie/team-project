@@ -10,7 +10,7 @@
         "@element-plus/icons": "^0.0.11",
         "axios": "^0.24.0",
         "echarts": "^5.5.1",
-        "element-plus": "^1.2.0-beta.1",
+        "element-plus": "^2.8.8",
         "exceljs": "^4.4.0",
         "file-saver": "^2.0.5",
         "mockjs": "^1.1.0",

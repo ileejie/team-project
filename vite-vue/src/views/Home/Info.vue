@@ -95,7 +95,10 @@
   </div>
 </template>
 
-<script>
+<script setup>
+import { ElMessage } from "element-plus";
+import { ref, reactive } from 'vue';
+// 固定数据
 const totalTable = [
   { id: 1, taskName: '微件使用分析定时任务', taskState: '1', trigGap: '2次/天', trigTimes: 3, startTime: '', createTime: '', isShow: true },
   { id: 2, taskName: '定时上报微件统计数据', taskState: '1', trigGap: '1次/30天', trigTimes: 1, startTime: '', createTime: '', isShow: true },
@@ -124,94 +127,91 @@ const totalTable = [
   { id: 25, taskName: '', taskState: '1', trigGap: '1次/30天', trigTimes: 1, startTime: '', createTime: '', isShow: true },
   { id: 26, taskName: '', taskState: '2', trigGap: '1次/15天', trigTimes: 1, startTime: '', createTime: '', isShow: true }
 ];
-export default {
-  name: 'TaskManage',
-  data() {
-    return {
-      dateRange: [],
-      queryForm: {
-        taskName: '',
-        taskState: '',
-        page: 1,
-        pageSize: 20
-      },
-      tableData: [],
-      total: 0,
-      taskStateOptions: [
-        { label: '运行', value: '1' },
-        { label: '暂停', value: '2' }
-      ],
-      tableChecked: []
-    };
-  },
-  mounted() {
-    this.tableData = totalTable.slice(0, 20);
-    this.total = totalTable.length;
-  },
-  // 方法实现
-  methods: {
-    queryData() {
-      this.tableData = []
-      totalTable.forEach(item => {
-        if (this.queryForm.taskState) {
-          if (item.taskName.includes(this.queryForm.taskName) && item.taskState === this.queryForm.taskState) {
-            this.tableData.push(item)
-          }
-        } else {
-          if (item.taskName.includes(this.queryForm.taskName)) {
-            this.tableData.push(item)
-          }
-        }
-      });
-      this.total = this.tableData.length;
-    },
-    resetQuery() {
-      this.queryForm = {
-        taskName: '',
-        taskState: '',
-        page: 1,
-        pageSize: 20
+const taskStateOptions = [
+  { label: '运行', value: '1' },
+  { label: '暂停', value: '2' }
+];
+// 定义表格ref
+let taskTable = ref();
+let dateRange = reactive([]);
+let queryForm = reactive({
+  taskName: '',
+  taskState: '',
+  page: 1,
+  pageSize: 20
+});
+let tableData = reactive([]);
+let total = ref(0);
+let tableChecked = reactive([]);
+tableData = totalTable.slice(0, 20);
+total.value = totalTable.length;
+// 数据查询方法
+const queryData = () => {
+  tableData = [];
+  totalTable.forEach(item => {
+    if (queryForm.taskState) {
+      if (item.taskName.includes(queryForm.taskName) && item.taskState === queryForm.taskState) {
+        tableData.push(item)
       }
-      this.queryForm.page = 1;
-      this.tableData = totalTable.slice(0, 20);
-    },
-    handleSizeChange(size) {
-      this.queryForm.pageSize = size;
-      this.queryForm.page = 1;
-      this.tableData = totalTable.slice(0, size);
-    },
-    handleCurrentChange(page) {
-      this.queryForm.page = page;
-      console.log(page, this.queryForm.pageSize);
-      this.tableData = totalTable.slice((page - 1) * this.queryForm.pageSize, page * this.queryForm.pageSize);
-    },
-    // 选择行数据
-    selectionLineChangeHandle(val) {
-      console.log(val);
-      this.tableChecked = val;
-    },
-    // 运行任务、暂停任务
-    operateTask(type) {
-      if (!this.tableChecked.length) {
-        this.$messge.warning('请选择要操作的数据');
-        return;
+    } else {
+      if (item.taskName.includes(queryForm.taskName)) {
+        tableData.push(item)
       }
-      this.tableChecked.forEach(item => {
-        this.tableData.forEach(obj => {
-          if (item.id === obj.id) {
-            obj.taskState = type === 'run' ? '1' : '2';
-          }
-        })
-      })
-      this.$refs.taskTable.clearSelection();
-      this.$messge.success('操作成功');
-    },
-    // 运行记录
-    runRecord(id) {},
-    // 历史记录
-    historyRecord(id) {}
-  }
+    }
+  });
+  total.value = tableData.length;
 };
+// 重置查询方法
+const resetQuery = () => {
+  queryForm = {
+    taskName: '',
+    taskState: '',
+    page: 1,
+    pageSize: 20
+  }
+  queryForm.page = 1;
+  tableData = totalTable.slice(0, 20);
+};
+const handleSizeChange = (size) => {
+  queryForm.pageSize = size;
+  queryForm.page = 1;
+  tableData = totalTable.slice(0, size);
+};
+const handleCurrentChange = (page) => {
+  queryForm.page = page;
+  tableData = totalTable.slice((page - 1) * queryForm.pageSize, page * queryForm.pageSize);
+};
+// 选择行数据
+const selectionLineChangeHandle = (val) => {
+  console.log(val);
+  tableChecked = val;
+};
+// 运行任务、暂停任务
+const operateTask = (type) => {
+  if (!tableChecked.length) {
+    ElMessage({
+      message: '请选择要操作的数据',
+      type: "warning"
+    });
+    return;
+  }
+  tableChecked.forEach(item => {
+    tableData.forEach(obj => {
+      if (item.id === obj.id) {
+        obj.taskState = type === 'run' ? '1' : '2';
+      }
+    })
+  })
+  taskTable.value.clearSelection();
+  ElMessage({
+    message: '操作成功',
+    type: "success"
+  })
+};
+// 运行记录
+const runRecord = (id) => {};
+// 历史记录
+const historyRecord = (id) => {};
 </script>
 
 <style lang='scss' scoped>

@@ -11,14 +11,11 @@
     </div>
 </template>
 
-<script>
+<script setup>
 import Header from './components/Header.vue'
 import NavBar from './components/NavBar.vue'
 import AppMain from './components/AppMain.vue'
 import Footer from './components/Footer.vue'
-export default {
-    components: { Header, NavBar, AppMain, Footer }
-}
 </script>
 
 <style lang="scss" scoped>
