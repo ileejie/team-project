@@ -12,10 +12,10 @@
 </template>
 
 <script setup>
-import Header from './components/Header.vue'
-import NavBar from './components/NavBar.vue'
-import AppMain from './components/AppMain.vue'
-import Footer from './components/Footer.vue'
+import Header from './components/Header.vue';
+import NavBar from './components/NavBar.vue';
+import AppMain from './components/AppMain.vue';
+import Footer from './components/Footer.vue';
 </script>
 
 <style lang="scss" scoped>

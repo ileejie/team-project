@@ -41,7 +41,7 @@
         <el-col :span="5">
           <el-form-item>
             <el-button type="primary" @click="queryData">查询</el-button>
-            <el-button @click="resetQuery">重置</el-button>
+            <el-button @click="resetQuery">重置 {{ t('login.username') }}</el-button>
             <el-button type="success" @click="operateTask('run')">运行</el-button>
             <el-button type="danger" @click="operateTask('pause')">暂停</el-button>
           </el-form-item>
@@ -96,8 +96,11 @@
 </template>
 
 <script setup>
+import { useI18n } from 'vue-i18n';
 import { ElMessage } from "element-plus";
 import { ref, reactive } from 'vue';
+// 定义国际化方法
+const { t } = useI18n()
 // 固定数据
 const totalTable = [
   { id: 1, taskName: '微件使用分析定时任务', taskState: '1', trigGap: '2次/天', trigTimes: 3, startTime: '', createTime: '', isShow: true },
