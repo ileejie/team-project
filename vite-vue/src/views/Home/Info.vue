@@ -41,7 +41,7 @@
         <el-col :span="5">
           <el-form-item>
             <el-button type="primary" @click="queryData">查询</el-button>
-            <el-button @click="resetQuery">重置 {{ t('login.username') }}</el-button>
+            <el-button @click="resetQuery">重置</el-button>
             <el-button type="success" @click="operateTask('run')">运行</el-button>
             <el-button type="danger" @click="operateTask('pause')">暂停</el-button>
           </el-form-item>
