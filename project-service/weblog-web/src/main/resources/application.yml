@@ -4,8 +4,8 @@ spring:
   profiles:
     # 默认激活 dev 环境
     active: dev
-#  datasource:
-#    username: root
-#    password: wain9425
-#    url: jdbc:mysql://localhost:3306/blog?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=UTC
-#    driver-class-name: com.mysql.cj.jdbc.Driver
+jwt:
+  # 签发人
+  issuer: project
+  # 秘钥
+  secret: jElxcSUj38+Bnh73T68lNs0DfBSit6U3whQlcGO2XwnI+Bo3g4xsiCIPg8PV/L0fQMis08iupNwhe2PzYLB9Xg==

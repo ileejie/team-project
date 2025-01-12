@@ -1,22 +1,32 @@
 <template>
-	<div class="login-wrap">
-		<el-form ref="loginRef" :model="formData" :rules="rules" label-width="100px" class="form-view">
-			<el-form-item class="form-title">用户登录</el-form-item>
-			<el-form-item label="用户名" prop="username">
-				<el-input v-model="formData.username" prefix-icon="User"></el-input>
-			</el-form-item>
-			<el-form-item label="密码" prop="password">
-				<el-input v-model="formData.password" show-password prefix-icon="Lock"></el-input>
-			</el-form-item>
-			<el-form-item class="between-item">
-				<el-button type="text" @click="register">用户注册</el-button>
-				<el-button type="text" @click="forget">忘记密码?</el-button>
-			</el-form-item>
-			<el-form-item>
-				<el-button type="primary" style="width: 100%" @click="submitLogin">登录</el-button>
-			</el-form-item>
-		</el-form>
-	</div>
+<!--	<div class="login-wrap">-->
+<!--		<el-form ref="loginRef" :model="formData" :rules="rules" label-width="100px" class="form-view">-->
+<!--			<el-form-item class="form-title">用户登录</el-form-item>-->
+<!--			<el-form-item label="用户名" prop="username">-->
+<!--				<el-input v-model="formData.username" prefix-icon="User"></el-input>-->
+<!--			</el-form-item>-->
+<!--			<el-form-item label="密码" prop="password">-->
+<!--				<el-input v-model="formData.password" show-password prefix-icon="Lock"></el-input>-->
+<!--			</el-form-item>-->
+<!--			<el-form-item class="between-item">-->
+<!--				<el-button type="text" @click="register">用户注册</el-button>-->
+<!--				<el-button type="text" @click="forget">忘记密码?</el-button>-->
+<!--			</el-form-item>-->
+<!--			<el-form-item>-->
+<!--				<el-button type="primary" style="width: 100%" @click="submitLogin">登录</el-button>-->
+<!--			</el-form-item>-->
+<!--		</el-form>-->
+<!--	</div>-->
+  <div class="flex h-screen w-screen">
+    <div class="flex-1 bg-black">
+      <div class="flex items-center justify-center h-full w-full"></div>
+    </div>
+    <div class="flex-1 bg-white">
+      <div class="flex flex-col items-center justify-center h-full w-full animate__animated animate__backInDown">
+        <h2 class="animate__animated animate__swing">登录</h2>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
